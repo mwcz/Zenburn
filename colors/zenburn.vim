@@ -115,6 +115,10 @@
 "
 "      let g:zenburn_disable_bold_CursorLine=1
 "
+" * Bold CursorColumn can be disabled with:
+"
+"      let g:zenburn_disable_bold_CursorColumn=1
+"
 " * New (dark) Visual coloring has been introduced.
 "   The dark Visual is more aligned with the rest of the colour scheme,
 "   especially if you use line numbers. If you wish to use the 
@@ -207,6 +211,10 @@ endif
 
 if ! exists("g:zenburn_disable_bold_CursorLine")
     let g:zenburn_disable_bold_CursorLine = 0
+endif
+
+if ! exists("g:zenburn_disable_bold_CursorColumn")
+    let g:zenburn_disable_bold_CursorColumn = 0
 endif
 
 if ! exists("g:zenburn_old_Visual")
@@ -311,7 +319,11 @@ if exists("g:zenburn_high_Contrast") && g:zenburn_high_Contrast
     endif
     hi CursorLineNr  guifg=#f2f3bb guibg=#161616           ctermfg=229 ctermbg=233
     if exists("g:zenburn_unified_CursorColumn") && g:zenburn_unified_CursorColumn
-        hi CursorColumn  guibg=#121212 gui=bold            ctermbg=233 cterm=none
+        if exists("g:zenburn_disable_bold_CursorColumn") && g:zenburn_disable_bold_CursorColumn
+            hi CursorColumn  guibg=#121212                     ctermbg=233 cterm=none
+        else
+            hi CursorColumn  guibg=#121212 gui=bold            ctermbg=233 cterm=none
+        endif
     else
         hi CursorColumn  guibg=#2b2b2b                     ctermbg=235 cterm=none
     endif
