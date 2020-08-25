@@ -111,6 +111,14 @@
 "   ":set cursorline cursorcolumn", since otherwise the effect won't be
 "   seen.
 "
+" * Bold CursorLine can be disabled with:
+"
+"      let g:zenburn_disable_bold_CursorLine=1
+"
+" * Bold CursorColumn can be disabled with:
+"
+"      let g:zenburn_disable_bold_CursorColumn=1
+"
 " * New (dark) Visual coloring has been introduced.
 "   The dark Visual is more aligned with the rest of the colour scheme,
 "   especially if you use line numbers. If you wish to use the 
@@ -199,6 +207,14 @@ endif
 
 if ! exists("g:zenburn_unified_CursorColumn")
     let g:zenburn_unified_CursorColumn = 0
+endif
+
+if ! exists("g:zenburn_disable_bold_CursorLine")
+    let g:zenburn_disable_bold_CursorLine = 0
+endif
+
+if ! exists("g:zenburn_disable_bold_CursorColumn")
+    let g:zenburn_disable_bold_CursorColumn = 0
 endif
 
 if ! exists("g:zenburn_old_Visual")
@@ -296,10 +312,18 @@ if exists("g:zenburn_high_Contrast") && g:zenburn_high_Contrast
     hi Normal        guifg=#dcdccc guibg=#1f1f1f           ctermfg=188 ctermbg=234
     hi Conceal       guifg=#8f8f8f guibg=#333333           ctermfg=246 ctermbg=235
     hi ColorColumn   guibg=#33332f                         ctermbg=235
-    hi CursorLine    guibg=#121212 gui=bold                ctermbg=233 cterm=none
+    if exists("g:zenburn_disable_bold_CursorLine") && g:zenburn_disable_bold_CursorLine
+        hi CursorLine    guibg=#121212                         ctermbg=233 cterm=none
+    else
+        hi CursorLine    guibg=#121212 gui=bold                ctermbg=233 cterm=none
+    endif
     hi CursorLineNr  guifg=#f2f3bb guibg=#161616           ctermfg=229 ctermbg=233
     if exists("g:zenburn_unified_CursorColumn") && g:zenburn_unified_CursorColumn
-        hi CursorColumn  guibg=#121212 gui=bold            ctermbg=233 cterm=none
+        if exists("g:zenburn_disable_bold_CursorColumn") && g:zenburn_disable_bold_CursorColumn
+            hi CursorColumn  guibg=#121212                     ctermbg=233 cterm=none
+        else
+            hi CursorColumn  guibg=#121212 gui=bold            ctermbg=233 cterm=none
+        endif
     else
         hi CursorColumn  guibg=#2b2b2b                     ctermbg=235 cterm=none
     endif
